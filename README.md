@@ -4,7 +4,7 @@
   </a>
   <h3 align="center">wAIfuS</h3>
   <p align="center">
-    AI Chatbot with Advanced Conversation Memory and Integrated Knowledge Base
+    AI Chatbot with Conversation Memory and Stored Knowledge Base
     <br />
   </p>
 </div>
