@@ -31,8 +31,19 @@ This advanced AI chatbot is designed to retain past conversations and leverage a
     - [x] Indonesia
     - [x] English
     - [x] Japanese
+- [ ] Translator Support
+    - [x] DeepLx
+    - [x] DeepL (Need Pro)
+    - [x] Google Translate
+
+# Known Issue
+
+- [ ] 15.04.23 It took quite a long time after the app is closed due to request to OPENAI to create Knowledge Base.
+- [ ] 15.04.23 If the app crash during conversation the Knowledge wont be saved.
+
 
 Suggestions are welcomed!
 See the [open issues](https://github.com/SynthpX/wAIfuS/issues) for a full list of proposed features (and known issues).
+
 
 
