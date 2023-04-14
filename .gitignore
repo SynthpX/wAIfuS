@@ -10,3 +10,4 @@ output.wav
 node_modules/
 model.pt
 conversation.json
+.env
