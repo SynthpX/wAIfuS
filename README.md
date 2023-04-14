@@ -18,7 +18,7 @@
 
 
 ## About The Project
-This advanced AI chatbot is designed to retain past conversations and leverage a knowledge base stored in SQLite. It is a significantly enhanced version of the original project found at https://github.com/ardha27/AI-Waifu-Vtuber. While the current iteration is under heavy development and not intended for public use, it offers a glimpse of the powerful features being integrated.
+This advanced AI chatbot is designed to retain past conversations and leverage a knowledge base stored in SQLite. While the current iteration is under heavy development and not intended for public use, it offers a glimpse of the powerful features being integrated.
 
 ## Ongoing
 
