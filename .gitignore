@@ -2,7 +2,6 @@ config.py
 tes.py
 __pycache__/
 db/knowledge.db
-characterConfig/Pina/
 chat.txt
 output.txt
 input.wav
