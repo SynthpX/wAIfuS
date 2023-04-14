@@ -5,44 +5,40 @@ import urllib.parse
 import wave
 from modules.katakana import *
 from dotenv import load_dotenv
-
 load_dotenv()
 
-# https://github.com/snakers4/silero-models#text-to-speech
-# https://github.com/snakers4/silero-models#text-to-speech
-def silero_tts(tts, language, model, speaker):
-    # maybe change this to GPU for beter performance
+def silero_tts(text, language, model_name, speaker):
     device = torch.device('cpu')
     torch.set_num_threads(4)
-    local_file = 'model.pt'
+    model_file = 'model.pt'
 
-    if not os.path.isfile(local_file):
-        torch.hub.download_url_to_file(f'https://models.silero.ai/models/tts/{language}/{model}.pt',
-                                    local_file)  
+    if not os.path.isfile(model_file):
+        torch.hub.download_url_to_file(
+            f'https://models.silero.ai/models/tts/{language}/{model_name}.pt',
+            model_file)  
 
-    model = torch.package.PackageImporter(local_file).load_pickle("tts_models", "model")
+    model = torch.package.PackageImporter(model_file).load_pickle("tts_models", "model")
     model.to(device)
 
-    example_text = "i'm fine thank you and you?"
     sample_rate = 48000
 
-    audio_paths = model.save_wav(text=tts,
-                                speaker=speaker,
-                                sample_rate=sample_rate)
-    
-def voicevox_tts(tts):
+    audio_paths = model.save_wav(text=text,
+                                 speaker=speaker,
+                                 sample_rate=sample_rate)
+
+def voicevox_tts(text):
     voicevox_url = os.getenv('VOICEVOX_URL')
-    # Convert the text to katakana. Example: ORANGE -> オレンジ, so the voice will sound more natural
-    katakana_text = katakana_converter(tts)
-    # You can change the voice to your liking. You can find the list of voices on speaker.json
-    # or check the website https://voicevox.hiroshiba.jp
-    params_encoded = urllib.parse.urlencode({'text': katakana_text, 'speaker': 46})
-    request = requests.post(f'{voicevox_url}/audio_query?{params_encoded}')
-    params_encoded = urllib.parse.urlencode({'speaker': 46, 'enable_interrogative_upspeak': True})
-    request = requests.post(f'{voicevox_url}/synthesis?{params_encoded}', json=request.json())
+    katakana_text = katakana_converter(text)
+    speaker_id = 46  # You can change the speaker ID according to your preference
+
+    audio_query_params = urllib.parse.urlencode({'text': katakana_text, 'speaker': speaker_id})
+    audio_query_response = requests.post(f'{voicevox_url}/audio_query?{audio_query_params}')
+
+    synthesis_params = urllib.parse.urlencode({'speaker': speaker_id, 'enable_interrogative_upspeak': True})
+    synthesis_response = requests.post(f'{voicevox_url}/synthesis?{synthesis_params}', json=audio_query_response.json())
 
     with open("test.wav", "wb") as outfile:
-        outfile.write(request.content)
+        outfile.write(synthesis_response.content)
 
 if __name__ == "__main__":
     silero_tts()
