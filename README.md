@@ -45,5 +45,3 @@ This advanced AI chatbot is designed to retain past conversations and leverage a
 Suggestions are welcomed!
 See the [open issues](https://github.com/SynthpX/wAIfuS/issues) for a full list of proposed features (and known issues).
 
-
-
