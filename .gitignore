@@ -12,3 +12,4 @@ conversation.json
 .env
 requirements.txt
 modules/knowledgeBase.py
+characterConfig
