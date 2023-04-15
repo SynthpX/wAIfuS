@@ -8,8 +8,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-load_dotenv()
-
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 def translate_deeplx(text, source, target):
