@@ -25,7 +25,7 @@ The current iteration is under heavy development and not intended for public use
 
 - [x] Add Stored Knowledge Base
 - [ ] Expanding and refining the knowledge base
-- [ ] Incorporating emotion detection
+- [ ] Emotion recognition
 - [ ] Merging with AI models
 - [ ] Enhancing TTS capabilities and exploring custom TTS options (suggestions for English and Indonesian TTS are welcome)
 - [ ] Multi-language Support
