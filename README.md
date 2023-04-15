@@ -18,7 +18,8 @@
 
 
 ## About The Project
-This advanced AI chatbot is designed to retain past conversations and leverage a knowledge base stored in SQLite. While the current iteration is under heavy development and not intended for public use, it offers a glimpse of the powerful features being integrated.
+This advanced AI chatbot is designed to retain past conversations and leverage a knowledge base stored in SQLite. 
+The current iteration is under heavy development and not intended for public use, it offers a glimpse of the powerful features being integrated (that is why it dosent have req.txt).
 
 ## Ongoing
 
@@ -44,4 +45,4 @@ This advanced AI chatbot is designed to retain past conversations and leverage a
 
 Suggestions are welcomed!
 See the [open issues](https://github.com/SynthpX/wAIfuS/issues) for a full list of proposed features (and known issues).
-
+This project is a heavy modified version of [ ardha's ](https://github.com/ardha27/AI-Waifu-Vtuber) 
