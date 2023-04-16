@@ -12,6 +12,7 @@ from modules.translate import *
 from modules.knowledgeBase import *
 from modules.TTS import *
 from modules.sendAudio import play_voice
+from modules.emotionRecognition import emotion_recognition
 load_dotenv()
 
 
@@ -74,8 +75,6 @@ def openai_answer():
 
     while total_characters > 4000:
         try:
-            # print(total_characters)
-            # print(len(conversation))
             conversation.pop(2)
             total_characters = sum(len(d['content']) for d in conversation)
         except Exception as e:
@@ -104,14 +103,15 @@ def translate_text(text):
     global is_Speaking
     # subtitle will act as subtitle for the viewer
     # subtitle = translate_google(text, "ID")
-
+    #emot recog
+    #emotion = emotion_recognition(text)
     # tts will be the string to be converted to audio
     detect = detect_google(text)
     tts = translate_google(text, f"{detect}", "JA")
     tts_id = translate_deepL(text, f"{detect}", "ID")
     #tts_id = translator.translate_text(eng_speech, target_lang=TARGET_LANGUAGE)
     # tts = translate_deeplx(text, f"{detect}", "JA")
-    tts_en = translate_google(text, f"{detect}", "EN")
+    tts_en = translate_google(text, f"{detect}", "EN")    
     try:
         print("ID : " + tts_id)
         print("JP : " + tts)
