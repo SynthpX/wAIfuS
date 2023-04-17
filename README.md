@@ -13,8 +13,9 @@
 ## Built With
 
 1. OpenAI
-2. Voicevox API (Local)
-3. Silero TTS
+2. Voicevox API
+3. Silero TTS 
+4. [Faster Whisper](https://github.com/guillaumekln/faster-whisper)
 
 
 ## About The Project
