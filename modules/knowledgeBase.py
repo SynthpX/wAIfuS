@@ -10,7 +10,8 @@ load_dotenv()
 
 outputNum = 20
 
-def getIdentity(identityPath):  
+
+def getIdentity(identityPath):
     with open(identityPath, "r", encoding="utf-8") as f:
         identityContext = f.read()
     return {"role": "user", "content": identityContext}
@@ -80,10 +81,6 @@ def save_history(history):
     with open("conversation.json", "w") as f:
         json.dump({"history": history}, f)
 
-def add_message_to_history(role, content):
-    global history
-    history.append({"role": role, "content": content})
-    save_history(history)
 
 def end_conversation():
     if history:
@@ -96,7 +93,6 @@ def getPrompt():
     history = load_history()
     
     prompt = []
-    prompt.append(getIdentity(os.getenv('IDENTITY_FILE')))
     prompt.append({"role": "system", "content": f"Below is conversation history.\n"})
 
     def getLastUserMessage(history):
@@ -127,12 +123,12 @@ def getPrompt():
             
             saveKnowledge(last_user_message['content'], topic)
             
-            prompt.append({"role": "system", "content": f"Here is some information about {last_user_message['content']}:\n\n{topic}"})
+            prompt.append({"role": f"system", "content": "Here is some information about {last_user_message['content']}:\n\n{topic}"})
     else:
         print("No user message found")
         knowledge = getKnowledge()
     for topic, summary in knowledge.items():
-        prompt.append({"role": "system", "content": f"Here is some information about {topic}:\n\n{summary}"})
+        prompt.append({"role": f"system", "content": "Here is some information about {topic}:\n\n{summary}"})
     
     prompt.append(
         {
@@ -153,4 +149,3 @@ def getPrompt():
         except:
             print("Error: Prompt too long!")
     return prompt
-

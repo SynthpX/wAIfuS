@@ -6,6 +6,7 @@ import os
 import json
 import time
 import winsound
+from faster_whisper import WhisperModel
 from dotenv import load_dotenv
 from modules.subtitle import *
 from modules.translate import *
@@ -13,18 +14,24 @@ from modules.knowledgeBase import *
 from modules.TTS import *
 from modules.sendAudio import play_voice
 from modules.emotionRecognition import emotion_recognition
+
+# Load environment variables
 load_dotenv()
 
 
+# Define constants
 owner_name = os.getenv('OWNER_NAME')
 MIC_ID = int(os.getenv('MICROPHONE_ID'))
 CABLE_ID = int(os.getenv('CABLE_INPUT_ID'))
 SPEAKER_ID = int(os.getenv('VOICEMEETER_INPUT_ID'))
-conversation = []
+
 # Create a dictionary to hold the message data
+conversation = []
 history = {"history": conversation}
 
 def record_audio():
+    """Record audio while the right shift key is pressed."""
+    # Audio settings
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
@@ -67,44 +74,15 @@ def record_audio():
     # Transcribe the audio file
     transcribe_audio(WAVE_OUTPUT_FILENAME)
 
-
-def openai_answer():
-    global total_characters, conversation
-
-    total_characters = sum(len(d['content']) for d in conversation)
-
-    while total_characters > 4000:
-        try:
-            conversation.pop(2)
-            total_characters = sum(len(d['content']) for d in conversation)
-        except Exception as e:
-            print("Error removing old messages: {0}".format(e))
-
-    with open("conversation.json", "w", encoding="utf-8") as f:
-        # Write the message data to the file in JSON format
-        json.dump(history, f, indent=4)
-
-    prompt = getPrompt()
-
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=prompt,
-        max_tokens=512,
-        temperature=1,
-        top_p=0.9
-    )
-    message = response['choices'][0]['message']['content']
-    conversation.append({'role': 'assistant', 'content': message})
-
-    translate_text(message)
-
 # translating is optional
 def translate_text(text):
     global is_Speaking
     # subtitle will act as subtitle for the viewer
     # subtitle = translate_google(text, "ID")
-    #emot recog
+
+    #emot recog for VtubeStudio (future)
     #emotion = emotion_recognition(text)
+    
     # tts will be the string to be converted to audio
     detect = detect_google(text)
     tts = translate_google(text, f"{detect}", "JA")
@@ -149,17 +127,50 @@ def translate_text(text):
 
 
 def transcribe_audio(file_path):
+    """Transcribe the given audio file."""
+    model_size = "small"
+
+    # Run on CPU with int8
+    model = WhisperModel(model_size, device="cpu", compute_type="int8")
     global chat_now
     try:
         with open(file_path, "rb") as audio_file:
-            # Transcribe the audio to detected language
-            transcript = openai.Audio.transcribe("whisper-1", audio_file)
-            chat_now = transcript.text.strip()
-            print(f"Question: {chat_now}")
+            segments, info = model.transcribe(audio_file, beam_size=5)
+            chat_now = " ".join(segment.text for segment in segments)
+            print(f"Question: {chat_now.strip()}")
     except openai.error.InvalidRequestError as e:
         print(f"Error transcribing audio: {e}")
         return
     result = f"{owner_name} said {chat_now}"
     conversation.append({'role': 'user', 'content': result})
     openai_answer()
-    
+
+def openai_answer():
+    global total_characters, conversation
+
+    total_characters = sum(len(d['content']) for d in conversation)
+
+    while total_characters > 4000:
+        try:
+            conversation.pop(2)
+            total_characters = sum(len(d['content']) for d in conversation)
+        except Exception as e:
+            print("Error removing old messages: {0}".format(e))
+
+    with open("conversation.json", "w", encoding="utf-8") as f:
+        # Write the message data to the file in JSON format
+        json.dump(history, f, indent=4)
+
+    prompt = getPrompt()
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=prompt,
+        max_tokens=512,
+        temperature=1,
+        top_p=0.9
+    )
+    message = response['choices'][0]['message']['content']
+    conversation.append({'role': 'assistant', 'content': message})
+
+    translate_text(message)
