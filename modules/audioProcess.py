@@ -8,7 +8,6 @@ import time
 import winsound
 from faster_whisper import WhisperModel
 from dotenv import load_dotenv
-from modules.subtitle import *
 from modules.translate import *
 from modules.knowledgeBase import *
 from modules.TTS import *
@@ -82,7 +81,7 @@ def translate_text(text):
 
     #emot recog for VtubeStudio (future)
     #emotion = emotion_recognition(text)
-    
+
     # tts will be the string to be converted to audio
     detect = detect_google(text)
     tts = translate_google(text, f"{detect}", "JA")
@@ -105,8 +104,6 @@ def translate_text(text):
     # Silero TTS, Silero TTS can generate English, Russian, French, Hindi, Spanish, German, etc. Uncomment the line below. Make sure the input is in that language
     silero_tts(tts_en, "en", "v3_en", "en_21")
 
-    # Generate Subtitle
-    generate_subtitle(chat_now, text)
 
     time.sleep(1)
 

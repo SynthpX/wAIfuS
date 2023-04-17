@@ -9,7 +9,6 @@ import keyboard
 from config import *
 from modules.translate import *
 from modules.TTS import *
-from modules.subtitle import *
 from modules.knowledgeBase import *
 from utils.twitch_config import *
 from modules.audioProcess import *
@@ -51,9 +50,7 @@ def main():
     try:
         print("Select mode:")
         print(f"{1}: Microphone")
-        print(f"{2}: YouTube Live")
-        print(f"{3}: Twitch Live")
-        print(f"{4}: Experimental")
+        print(f"{2}: Experimental")
         mode = input("Mode : ")
 
         if mode == "1":
