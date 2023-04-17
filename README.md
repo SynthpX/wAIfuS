@@ -26,14 +26,13 @@ The current iteration is under heavy development and not intended for public use
 
 - [x] Add Stored Knowledge Base
 - [ ] Expanding and refining the knowledge base
-- [ ] Emotion recognition
-- [ ] Merging with AI models
-- [ ] Enhancing TTS capabilities and exploring custom TTS options (suggestions for English and Indonesian TTS are welcome)
-- [ ] Multi-language Support
+- [x] Emotion recognition (Implemented but Intended for Vtube Audio)
+- [x] Enhancing TTS capabilities and exploring custom TTS options (suggestions for TTS for Supported LANG are ALWAYS welcome)
+- [x] Multi-language Support
     - [x] Indonesia
     - [x] English
     - [x] Japanese
-- [ ] Translator Support
+- [x] Translator Support
     - [x] DeepLx
     - [x] DeepL (Need Pro)
     - [x] Google Translate
