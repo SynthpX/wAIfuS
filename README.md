@@ -24,15 +24,17 @@ The current iteration is under heavy development and not intended for public use
 
 ## Ongoing
 
+- [ ] Customized AI Identity
+- [ ] Vtube Studio API Implementation
 - [x] Add Stored Knowledge Base
 - [ ] Expanding and refining the knowledge base
 - [x] Emotion recognition (Implemented but Intended for Vtube Audio)
 - [x] Enhancing TTS capabilities and exploring custom TTS options (suggestions for TTS for Supported LANG are ALWAYS welcome)
-- [x] Multi-language Support
+- [x] Multi-language Support (adding more LANG is always an option)
     - [x] Indonesia
     - [x] English
     - [x] Japanese
-- [x] Translator Support
+- [x] Translator Support (adding more translator is always an option, im also considering using [OpenAI as translator](https://arxiv.org/pdf/2301.08745v2.pdf))
     - [x] DeepLx
     - [x] DeepL (Need Pro)
     - [x] Google Translate
