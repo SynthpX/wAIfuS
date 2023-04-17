@@ -19,7 +19,6 @@ def silero_tts(text, language, model_name, speaker):
 
     model = torch.package.PackageImporter(model_file).load_pickle("tts_models", "model")
     model.to(device)
-
     sample_rate = 48000
 
     audio_paths = model.save_wav(text=text,

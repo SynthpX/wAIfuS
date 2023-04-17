@@ -12,7 +12,6 @@ from modules.TTS import *
 from modules.subtitle import *
 from modules.knowledgeBase import *
 from utils.twitch_config import *
-from modules.liveChat import *
 from modules.audioProcess import *
 
 load_dotenv()
@@ -54,6 +53,7 @@ def main():
         print(f"{1}: Microphone")
         print(f"{2}: YouTube Live")
         print(f"{3}: Twitch Live")
+        print(f"{4}: Experimental")
         mode = input("Mode : ")
 
         if mode == "1":
@@ -63,16 +63,9 @@ def main():
                     record_audio()
         
         elif mode == "2":
-            live_id = input("Livestream ID: ")
-            thread = threading.Thread(target=prepare_response, args=(conversation,))
+            thread = threading.Thread(target=prepare_response)
             thread.start()
-            yt_livechat(live_id, conversation)
-
-        elif mode == "3":
-            print("To use this mode, make sure to change utils/twitch_config.py to your own config")
-            thread = threading.Thread(target=prepare_response, args=(conversation,))
-            thread.start()
-            twitch_livechat(conversation)
+            
     except KeyboardInterrupt:
         if thread is not None:
             thread.join()
