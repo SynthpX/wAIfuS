@@ -119,6 +119,7 @@ def getPrompt():
                 n=1,
                 stop=None,
             )
+            
             topic = response.choices[0].text
             
             saveKnowledge(last_user_message['content'], topic)
