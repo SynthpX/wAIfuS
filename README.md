@@ -1,4 +1,3 @@
-<br />
 <div align="center">
   <a href="#">
   </a>
@@ -6,9 +5,16 @@
   <p align="center">
     AI Chatbot with Conversation Memory and Stored Knowledge Base
     <br />
+    <a href="https://github.com/SynthpX/wAIfuS/README.md"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="hhttps://github.com/SynthpX/wAIfuS/">View Demo</a>
+    ·
+    <a href="https://github.com/SynthpX/wAIfuS/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/SynthpX/wAIfuS/issues">Request Feature</a>
   </p>
 </div>
-
 
 ## Built With
 
@@ -44,7 +50,13 @@ The current iteration is under heavy development and not intended for public use
 - [ ] 15.04.23 It took quite a long time after the app is closed due to request to OPENAI to create Knowledge Base.
 - [ ] 15.04.23 If the app crash during conversation the Knowledge wont be saved.
 
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Suggestions are welcomed!
 See the [open issues](https://github.com/SynthpX/wAIfuS/issues) for a full list of proposed features (and known issues).
-This project is a heavy modified version of [ ardha's ](https://github.com/ardha27/AI-Waifu-Vtuber) 
+This project is inspired by the works of ardha27 and sociallyineptweeb
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

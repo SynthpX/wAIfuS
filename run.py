@@ -6,11 +6,10 @@ import traceback
 from dotenv import load_dotenv
 import openai
 import keyboard
-from config import *
+
 from modules.translate import *
 from modules.TTS import *
 from modules.knowledgeBase import *
-from utils.twitch_config import *
 from modules.audioProcess import *
 
 load_dotenv()
@@ -58,7 +57,6 @@ def main():
             while True:
                 if keyboard.is_pressed('RIGHT_SHIFT'):
                     record_audio()
-        
         elif mode == "2":
             thread = threading.Thread(target=prepare_response)
             thread.start()

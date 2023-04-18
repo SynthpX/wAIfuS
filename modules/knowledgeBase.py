@@ -5,16 +5,17 @@ import sqlite3
 import datetime
 import atexit
 from dotenv import load_dotenv
+from modules.identity import read_identity_file, identity
 
 load_dotenv()
 
+
 outputNum = 20
 
-
 def getIdentity(identityPath):
-    with open(identityPath, "r", encoding="utf-8") as f:
-        identityContext = f.read()
-    return {"role": "user", "content": identityContext}
+    char_name, char_persona, char_greeting, example_dialogue, world_scenario = read_identity_file(identityPath)
+    identityContext = identity(char_name, char_persona, char_greeting, example_dialogue, world_scenario)
+    return identityContext
 
 # Ensure the "db" folder exists
 db_folder = "db"
@@ -91,9 +92,11 @@ atexit.register(end_conversation)
 
 def getPrompt():
     history = load_history()
-    
+    ident = getIdentity("identity.json")
+
     prompt = []
-    prompt.append({"role": "system", "content": f"Below is conversation history.\n"})
+    prompt.append({"role": "system", "content": f"{ident}"})
+    prompt.append({"role": "system", "content": f"Below is our conversation history.\n"})
 
     def getLastUserMessage(history):
         for message in reversed(history):

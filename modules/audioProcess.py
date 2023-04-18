@@ -138,7 +138,7 @@ def transcribe_audio(file_path):
     except openai.error.InvalidRequestError as e:
         print(f"Error transcribing audio: {e}")
         return
-    result = f"{owner_name} said {chat_now}"
+    result = f"{chat_now}"
     conversation.append({'role': 'user', 'content': result})
     openai_answer()
 
@@ -154,12 +154,16 @@ def openai_answer():
         except Exception as e:
             print("Error removing old messages: {0}".format(e))
 
+    unanswered_questions = [msg for msg in conversation if msg['role'] == 'user' and not msg.get('answered')]
+    if not unanswered_questions:
+        return
+
     with open("conversation.json", "w", encoding="utf-8") as f:
         # Write the message data to the file in JSON format
         json.dump(history, f, indent=4)
 
     prompt = getPrompt()
-
+    
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=prompt,
@@ -169,5 +173,6 @@ def openai_answer():
     )
     message = response['choices'][0]['message']['content']
     conversation.append({'role': 'assistant', 'content': message})
-
+    for msg in unanswered_questions:
+        msg['answered'] = True
     translate_text(message)
