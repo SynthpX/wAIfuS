@@ -22,20 +22,24 @@
 2. Voicevox API
 3. Silero TTS 
 4. [Faster Whisper](https://github.com/guillaumekln/faster-whisper)
+5. [Text Classification](https://huggingface.co/j-hartmann/emotion-english-distilroberta-base) (Used on Emotion Recognition)
+6. [REMO](https://github.com/daveshap/REMO_Framework)
 
 
 ## About The Project
 This advanced AI chatbot is designed to retain past conversations and leverage a knowledge base stored in SQLite. 
 The current iteration is under heavy development and not intended for public use, it offers a glimpse of the powerful features being integrated (that is why it dosent have req.txt).
 
-## Ongoing
 
-- [ ] Customized AI Identity
-- [ ] Vtube Studio API Implementation
+## Features
+
 - [x] Add Stored Knowledge Base
 - [ ] Expanding and refining the knowledge base
+    - [ ] Customized AI Identity
+    - [ ] Implement Conversation Summary Memory
 - [x] Emotion recognition (Implemented but Intended for Vtube Audio)
-- [x] Enhancing TTS capabilities and exploring custom TTS options (suggestions for TTS for Supported LANG are ALWAYS welcome)
+- [x] Enhancing TTS capabilities and exploring custom TTS options
+    - [ ] Train/Use Custom Model for TTS
 - [x] Multi-language Support (adding more LANG is always an option)
     - [x] Indonesia
     - [x] English

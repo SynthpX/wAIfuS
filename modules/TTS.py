@@ -2,7 +2,6 @@ import os
 import torch
 import requests
 import urllib.parse
-import wave
 from modules.katakana import *
 from dotenv import load_dotenv
 load_dotenv()

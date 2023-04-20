@@ -169,7 +169,7 @@ def openai_answer():
         messages=prompt,
         max_tokens=512,
         temperature=1,
-        top_p=0.9
+        top_p=1
     )
     message = response['choices'][0]['message']['content']
     conversation.append({'role': 'assistant', 'content': message})

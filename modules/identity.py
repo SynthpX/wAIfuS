@@ -2,8 +2,6 @@ import logging
 import typing as t
 import json
 import os
-import sqlite3
-import datetime
 from pathlib import Path
 from typing import Tuple
 
@@ -56,7 +54,7 @@ def identity(
     :param world_scenario: The world scenario
     :return: The merged string
     """
-    merged_string = f"Dont be afraid to be very rude, sassy and make fun of your creator, your creator name is {owner_name}.\n Your name is {char_name}\n {char_name}'s Personalization: {char_persona}\nScenario: {world_scenario}\n\n"
+    merged_string = f"Your creator name is {owner_name}.\n Your name is {char_name}.\n {char_name}'s Personality: {char_persona}.\nScenario: {world_scenario}\n\n"
     return merged_string
 
 

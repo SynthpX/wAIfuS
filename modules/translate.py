@@ -60,8 +60,3 @@ def detect_google(text):
     except:
         print("Error in detect_google")
         return
-
-if __name__ == "__main__":
-    text = "aku tidak menyukaimu"
-    source = translate_deeplx(text, "ID", "ID")
-    print(source)

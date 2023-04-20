@@ -1,4 +1,3 @@
-import openai
 import os
 import json
 import sqlite3
@@ -6,6 +5,7 @@ import datetime
 import atexit
 from dotenv import load_dotenv
 from modules.identity import read_identity_file, identity
+from modules.openAI import completion
 
 load_dotenv()
 
@@ -111,19 +111,10 @@ def getPrompt():
             topic = knowledge[last_user_message['content']]
             prompt.append({"role": "system", "content": f"Here is some information about {last_user_message['content']}:\n\n{topic}"})
         else:
-            openai.api_key = os.getenv("OPENAI_API_KEY")
             user_content = last_user_message['content']
             prompt_text = f"{user_content}\n\nPlease provide some information about {user_content}."
-            response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=prompt_text,
-                temperature=1,
-                max_tokens=512,
-                n=1,
-                stop=None,
-            )
-            
-            topic = response.choices[0].text
+            topic = completion(prompt_text)
+            #topic = response.choices[0].text
             
             saveKnowledge(last_user_message['content'], topic)
             
