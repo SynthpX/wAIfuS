@@ -13,7 +13,6 @@ from faster_whisper import WhisperModel
 
 from modules.TTS import google_tts,silero_tts
 from utils.voicevox import VoicevoxTTSPlugin
-from modules.emotionRecognition import emotion_recognition
 from modules.prompt import getPrompt
 from modules.sendAudio import play_voice
 from modules.translate import detect_google, translate_google, translate_deepL
@@ -117,12 +116,12 @@ def openai_answer():
 def translate_text(text):
     detect = detect_google(text)
     tts = translate_google(text, detect, "JA")
-    tts_id = translate_deepL(text, detect, "ID")
+    #tts_id = translate_deepL(text, detect, "ID")
     tts_en = translate_google(text, detect, "EN")
 
     try:
-        print("ID : " + tts_id)
-        print("JP : " + tts)
+        #print("ID : " + tts_id)
+        #print("JP : " + tts)
         print("EN : " + tts_en)
     except Exception as e:
         print("Error printing text: {0}".format(e))

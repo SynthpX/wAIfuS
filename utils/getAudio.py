@@ -1,6 +1,8 @@
-import speech_recognition as sr
+import sounddevice as sd
 
+def print_audio_devices():
+    devices = sd.query_devices()
+    for i, device in enumerate(devices):
+        print(f"{i}: {device['name']}")
 
-if __name__ == '__main__':
-    for mic_id, mic_name in enumerate(sr.Microphone.list_microphone_names()):
-        print(f'{mic_id}: {mic_name}')
+print_audio_devices()

@@ -1,19 +1,12 @@
-import base64
-import io
-import json
+
 import sys
 from importlib import util
-from dotenv import load_dotenv
 
-import numpy as np
 import pyaudio
 import wave
 
 from pathlib import Path
 import os
-from utils.settings import GetOption
-import websocket
-from utils.downloader import download_thread
 import tarfile
 import zipfile
 import shutil
@@ -64,6 +57,9 @@ def move_files(source_dir, target_dir):
         if os.path.isfile(source_path):
             shutil.move(source_path, target_path)
 
+
+from pathlib import Path
+import os
 
 voicevox_plugin_dir = Path(Path.cwd() / "Plugins" / "voicevox_plugin")
 os.makedirs(voicevox_plugin_dir, exist_ok=True)
@@ -120,8 +116,12 @@ class VoicevoxTTSPlugin():
     previous_speaker = None
     
     def init(self):
-        self.get_plugin_setting = "16"
-        self.acceleration_mode = "CPU"
+        import sys
+        import shutil
+        from importlib import util
+        from utils.settings import GetOption
+        from utils.downloader import download_thread
+        from dotenv import load_dotenv
         
         os.makedirs(Path(voicevox_plugin_dir / self.acceleration_mode), exist_ok=True)
 
@@ -169,9 +169,10 @@ class VoicevoxTTSPlugin():
         # Call the init method when an instance is created
         self.init()
 
-    def _generate_wav_buffer(self, audio):
-        buff = io.BytesIO(audio)
-        return buff
+    def _play_audio(self, audio, device=None):
+        import wave
+        import pyaudio
+        buff = self._generate_wav_buffer(audio)
 
     def _play_audio(self, audio, device=None):
         buff = self._generate_wav_buffer(audio)
@@ -207,6 +208,7 @@ class VoicevoxTTSPlugin():
         p.terminate()
 
     def predict(self, text, speaker):
+        import numpy as np
         if self.previous_speaker != speaker:
             self.core.load_model(speaker)
             self.previous_speaker = speaker
@@ -227,6 +229,7 @@ class VoicevoxTTSPlugin():
         pass
 
     def stt(self, text, result_obj):
+        from utils.settings import GetOption
         if self.is_enabled(False) and GetOption("tts_answer") and text.strip() != "":
             audio_device = GetOption("device_out_index")
             wav = self.play_tts(text.strip())
@@ -235,7 +238,6 @@ class VoicevoxTTSPlugin():
         return
 
     def tts(self, text, device_index, speaker_id, websocket_connection=None, download=False, save_locally=False):
-        #print("device_index: " + str(device_index))
         if self.is_enabled(False):
             wav = self.play_tts(text, speaker_id)
 
