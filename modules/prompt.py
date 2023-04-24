@@ -1,7 +1,6 @@
 import os
 import json
 from dotenv import load_dotenv
-from modules.identity import read_identity_file, identity
 
 load_dotenv()
 
@@ -9,10 +8,9 @@ memorySize = 5
 num_clusters = 5
 outputNum = 20
 
-def getIdentity(identityPath):
-    #char_name, char_persona, char_greeting, example_dialogue, world_scenario = read_identity_file(identityPath)
-    #identityContext = identity(char_name, char_persona, char_greeting, example_dialogue, world_scenario)
-    identityContext = f"You are Asuna from Sword Art Online. Reply to me as im Kirito."
+def getIdentity():
+    with open("identity.txt", "r") as file:
+        identityContext = file.read()
     return identityContext
 
 def load_history():
@@ -27,10 +25,10 @@ history = load_history()
 
 def getPrompt():
     history = load_history()
-    ident = getIdentity("identity.json")
+    identityContext = getIdentity()
 
     prompt = []
-    prompt.append({"role": "system", "content": f"{ident}"})
+    prompt.append({"role": "system", "content": f"{identityContext}\n The RP will begin. You will act as Yae Miko. <<Begin>>"})
     prompt.append(history[-1])
 
     def getTotalPromptLength(prompt):

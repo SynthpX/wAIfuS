@@ -2,12 +2,11 @@ import json
 import os
 import time
 import wave
-from pathlib import Path
+import re
 
 import keyboard
 import openai
 import pyaudio
-import winsound
 from dotenv import load_dotenv
 from faster_whisper import WhisperModel
 
@@ -74,7 +73,7 @@ def transcribe_audio(file_path):
         with open(file_path, "rb") as audio_file:
             segments, _ = ASR_MODEL.transcribe(audio_file, beam_size=5)
             chat_now = " ".join(segment.text for segment in segments)
-            print(f"Question: {chat_now.strip()}")
+            print(f"You: {chat_now.strip()}")
     except openai.error.InvalidRequestError as e:
         print(f"Error transcribing audio: {e}")
         return
@@ -103,29 +102,35 @@ def openai_answer():
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=prompt,
-        max_tokens=512,
+        max_tokens=248,
         temperature=1,
         top_p=1
     )
     message = response['choices'][0]['message']['content']
+    replies, situation = process_message(message)
     conversation.append({'role': 'assistant', 'content': message})
     for msg in unanswered_questions:
         msg['answered'] = True
-    translate_text(message)
+
+    print("EN : " + situation)
+    translate_text(replies)
+    
+
+def process_message(message):
+    # Find the text inside double quotes
+    reply_pattern = r'"(.*?)"'
+    reply = re.findall(reply_pattern, message)
+    replies = ". ".join(reply)
+    # Replace the reply with an empty string and remove leading/trailing spaces
+    situation = message
+
+    return replies, situation
 
 def translate_text(text):
     detect = detect_google(text)
-    tts = translate_google(text, detect, "JA")
+    tts = translate_deepL(text, detect, "JA")
     #tts_id = translate_deepL(text, detect, "ID")
-    tts_en = translate_google(text, detect, "EN")
-
-    try:
-        #print("ID : " + tts_id)
-        #print("JP : " + tts)
-        print("EN : " + tts_en)
-    except Exception as e:
-        print("Error printing text: {0}".format(e))
-        return
+    #tts_en = translate_google(text, detect, "EN")
 
     plugin = VoicevoxTTSPlugin()
     plugin.tts(tts, SPEAKER_ID, 18, websocket_connection=None, download=False, save_locally=True)

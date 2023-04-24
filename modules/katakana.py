@@ -31,5 +31,4 @@ def katakana_converter(text):
             text = text.replace(word, katakana)
         except:
             pass
-
     return text
