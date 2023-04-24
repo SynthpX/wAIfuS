@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 from typing import Tuple
 
-from modules.parsing import parse_messages
 from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
@@ -13,7 +12,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 owner_name = os.getenv('OWNER_NAME')
 
-def read_identity_file(identity_path: str) -> Tuple[str, str, str, str, str]:
+def read_identity_file(identity_path: str) -> Tuple[str, str]:
     """
     Read an identity file and return the character information.
 
@@ -25,25 +24,19 @@ def read_identity_file(identity_path: str) -> Tuple[str, str, str, str, str]:
             identity = json.load(f)
         char_name = identity["char_name"]
         char_persona = identity["char_persona"]
-        char_greeting = identity["char_greeting"]
-        example_dialogue = identity["example_dialogue"]
-        world_scenario = identity["world_scenario"]
 
     except FileNotFoundError:
         logger.error(f"File {identity_path} not found.")
-        return None, None, None, None, None
+        return None, None
     except KeyError as e:
         logger.error(f"Key error: {e}. Please check the JSON file format.")
-        return None, None, None, None, None
+        return None, None
 
-    return char_name, char_persona, char_greeting, example_dialogue, world_scenario
+    return char_name, char_persona
 
 def identity(
     char_name: str,
     char_persona: str,
-    char_greeting: str,
-    example_dialogue: str,
-    world_scenario: str,
 ) -> str:
     """
      Merges the character information into a single string.
@@ -54,8 +47,13 @@ def identity(
     :param world_scenario: The world scenario
     :return: The merged string
     """
-    merged_string = f"Your creator name is {owner_name}.\n Your name is {char_name}.\n {char_name}'s Personality: {char_persona}.\nScenario: {world_scenario}\n\n"
+    #merged_string = f"Consider that the following is conversation between an AI Assistant named {char_name} and {owner_name}.\n {char_persona}\n "
+    merged_string = f"You are Akagi from Azur Lane. Reply to me as im Kaga."
     return merged_string
 
+def getIdentity(identityPath):
+    char_name, char_persona = read_identity_file(identityPath)
+    identityContext = identity(char_name, char_persona)
+    return identityContext
 
 

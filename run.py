@@ -9,7 +9,7 @@ import keyboard
 
 from modules.translate import *
 from modules.TTS import *
-from modules.knowledgeBase import *
+from modules.prompt import *
 from modules.audioProcess import *
 
 load_dotenv()
