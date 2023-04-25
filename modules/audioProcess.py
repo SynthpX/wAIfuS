@@ -112,8 +112,13 @@ def openai_answer():
     for msg in unanswered_questions:
         msg['answered'] = True
 
+    # Save the conversation to the "conversation.json" file after appending the assistant's response
+    with open("conversation.json", "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=4)
+
     print(" " + situation)
     translate_text(replies)
+    return situation
     
 
 def process_message(message):

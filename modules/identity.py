@@ -51,7 +51,7 @@ def build_prompt(char_name: str, char_persona: str, char_greeting: str, example_
     :param world_scenario: A description of the world scenario
     :return: A generated prompt based on the given parameters
     """
-    prompt = f"Create a prompt for RP with this info : \n char_name : {char_name} \n char_persona : {char_persona} \n char_greeting : {char_greeting} \n example_dialogue : {example_dialogue} \n world_scenario : {world_scenario} "
+    prompt = f"Role Play \n Character: {char_name}\n {char_persona} Greeting : {char_greeting}\n Example Dialogue: {example_dialogue}\n World Scenario: {world_scenario} <<start>>\n "
 
     return prompt
 
@@ -64,34 +64,41 @@ def send_prompt_to_openai(api_key: str, prompt: str) -> str:
     """
     openai.api_key = api_key
     response = openai.Completion.create(
-        engine="gpt-3.5-turbo-0301",
+        engine="text-davinci-003",
         prompt=prompt,
         max_tokens=150,
         n=1,
         stop=None,
         temperature=0.7,
     )
-
     generated_text = response.choices[0].text.strip()
     return generated_text
 
-def main():
-    identity_path = "identity.json"
+def createWaifuPrompt(json_file_path):
+    identity_path = json_file_path
     char_name, char_persona, char_greeting, example_dialogue, world_scenario = read_identity_file(identity_path)
 
     if char_name and char_persona and char_greeting and example_dialogue and world_scenario:
         prompt = build_prompt(char_name, char_persona, char_greeting, example_dialogue, world_scenario)
-        print("Generated prompt:", prompt)
+        return prompt
+        
+        """
+            #print("Generated prompt:", prompt)
 
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             print("Error: OpenAI API key not found in environment variables.")
             return
-
         generated_text = send_prompt_to_openai(api_key, prompt)
-        print("Generated text from OpenAI:", generated_text)
-
+        return generated_text
+        #print("Generated prompt:", generated_text)
+        """
+        
+"""
 if __name__ == "__main__":
-    main()
+    file = "identity.json"
+    createWaifuPrompt(file)
+"""
+
 
 

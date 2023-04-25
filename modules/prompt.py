@@ -15,7 +15,6 @@ def getIdentity():
 
 def getPrompt():
     identityContext = getIdentity()
-    
     with open("conversation.json", "r") as file:
         data = json.load(file)
 
