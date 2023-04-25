@@ -108,11 +108,11 @@ def openai_answer():
     )
     message = response['choices'][0]['message']['content']
     replies, situation = process_message(message)
-    conversation.append({'role': 'assistant', 'content': message})
+    conversation.append({'role': 'assistant', 'content': replies})
     for msg in unanswered_questions:
         msg['answered'] = True
 
-    print("EN : " + situation)
+    print(" " + situation)
     translate_text(replies)
     
 
@@ -120,7 +120,10 @@ def process_message(message):
     # Find the text inside double quotes
     reply_pattern = r'"(.*?)"'
     reply = re.findall(reply_pattern, message)
-    replies = ". ".join(reply)
+    if not reply:
+        replies = message
+    else:
+        replies = ". ".join(reply)
     # Replace the reply with an empty string and remove leading/trailing spaces
     situation = message
 
@@ -133,7 +136,7 @@ def translate_text(text):
     #tts_en = translate_google(text, detect, "EN")
 
     plugin = VoicevoxTTSPlugin()
-    plugin.tts(tts, SPEAKER_ID, 18, websocket_connection=None, download=False, save_locally=True)
+    plugin.tts(tts, SPEAKER_ID, 14, websocket_connection=None, download=False, save_locally=True)
     time.sleep(1)
 
     audio_device_ids = [SPEAKER_ID]
