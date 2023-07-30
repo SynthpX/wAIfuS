@@ -11,7 +11,7 @@ from modules.translate import *
 from modules.TTS import *
 from modules.prompt import *
 from modules.audioProcess import *
-load_dotenv()s
+load_dotenv()
 
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 openai.api_key = os.getenv('OPENAI_API_KEY')
